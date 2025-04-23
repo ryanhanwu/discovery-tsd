@@ -5,6 +5,12 @@ declare namespace nested {
     }
   }
 
+  namespace dot {
+    namespace dotresource {
+      type IListParams = { 'dotresource.token'?: string };
+    }
+  }
+
   namespace shallow {
     type ICreateParams = { name?: string };
   }

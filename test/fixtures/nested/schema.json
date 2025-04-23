@@ -27,6 +27,21 @@
           }
         }
       }
+    },
+    "dot": {
+      "resources": {
+        "dotresource": {
+          "methods": {
+            "list": {
+              "parameters": {
+                "dotresource.token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ class Converter {
       types = [types];
     }
 
-    const refs = types.map(type => this.toTypeName(type));
+    const refs = types.map((type) => this.toTypeName(type));
     return [type, ...refs].join('&');
   }
   getType(schema) {
@@ -58,14 +58,11 @@ class Converter {
     return `Array<${this.toUnion(types)}>`;
   }
   toLiteralUnion(values) {
-    const types = values.map(v => (typeof v === 'string' ? `'${v}'` : v));
+    const types = values.map((v) => (typeof v === 'string' ? `'${v}'` : v));
     return this.toUnion(types);
   }
   toJSDoc(str) {
-    const docs = str
-      .split('\n')
-      .join('\n * ')
-      .replace(/\*\//g, '*\\/');
+    const docs = str.split('\n').join('\n * ').replace(/\*\//g, '*\\/');
     return `\n/**\n * ${docs}\n */\n`;
   }
   toObject(props = {}, additional = false) {
@@ -73,12 +70,13 @@ class Converter {
 
     Object.keys(props)
       .sort()
-      .forEach(name => {
+      .forEach((name) => {
+        const propName = name.includes('.') ? `'${name}'` : name;
         const prop = props[name];
         const docs = prop.description ? this.toJSDoc(prop.description) : '';
         const prefix = prop.readonly ? 'readonly ' : '';
         const suffix = prop.required ? '' : '?';
-        const key = `${prefix}${name}${suffix}`;
+        const key = `${prefix}${propName}${suffix}`;
         const value = this.getType(prop);
         fields.push(`${docs}${key}: ${value}`);
       });
@@ -91,7 +89,7 @@ class Converter {
     return `{${fields.join(';')}}`;
   }
   toTuple(schemas, additional = false) {
-    const types = schemas.map(schema => this.getType(schema));
+    const types = schemas.map((schema) => this.getType(schema));
 
     if (additional) {
       types.push('...any[]');
